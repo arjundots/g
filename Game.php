@@ -7,7 +7,7 @@ function new_game($players, $mode = 'Easy', $board_size = 100)
 	$snakes_ladders_list = snakes_ladders_list($snakes_ladders);
 	// echo "<pre>";
 	// print_r($snakes_ladders);
-	// print_r($snakes_ladders_list);
+	//print_r($snakes_ladders_list);
 	return $snakes_ladders_list;
 }
 function snakes_ladders_list($snakes_ladders){

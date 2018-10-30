@@ -179,9 +179,9 @@
       // Calculate the path's start/end coordinates.
       // We want to align with the elements' mid point.
       var startX = startCoord.left + centreSX * $startElem.outerWidth() - svgLeft;
-      var startY = startCoord.top + centreSY * $startElem.outerHeight() - svgTop-10;
+      var startY = startCoord.top + centreSY * $startElem.outerHeight() - svgTop;
       var endX = endCoord.left + centreEX * $endElem.outerWidth() - svgLeft;
-      var endY = endCoord.top + centreEY * $endElem.outerHeight() - svgTop+10;
+      var endY = endCoord.top + centreEY * $endElem.outerHeight() - svgTop;
 
       this.drawPath(pathData.path, pathData.offset, orientation, startX, startY, endX, endY);
       if (pathData.text != undefined && pathData.tspan != undefined) {
