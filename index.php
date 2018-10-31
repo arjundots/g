@@ -6,26 +6,33 @@
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 		<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"/>
 		<script src="js/jquery.html-svg-connect.js"></script>
+		<?php require_once('Game.php'); ?>
+		<?php list($snakes,$ladders) = new_game(); ?>
 		<script type="text/javascript">
 			jQuery(document).ready(function($) {
-				ladders = {29: 78};
-				snakes = {87: 2};
+				snakes = {};
+				ladders = {};
+				var paths = [];
+				<?php foreach($snakes as $key => $val){ ?>
+					snakes[<?=$val?>]  = <?=$key?>;
+					var path = {start: "#<?=$key?>", end: "#<?=$val?>", stroke: "red", class: "snake", strokeWidth: 3 };
+					paths.push(path);
+				<?php } ?>
+				<?php foreach($ladders as $key => $val){ ?>
+					ladders[<?=$key?>]  = <?=$val?>;
+					paths.push({start: "#<?=$key?>", end: "#<?=$val?>", stroke: "green", class: "ladder", strokeWidth: 12 });
+				<?php } ?>
 				
 				$("#svgContainer").HTMLSVGconnect({
-					stroke: "green",
-					strokeWidth: 8,
 					orientation: "auto",
-					paths: [
-					{ start: "#29", end: "#78", strokeWidth: 12, orientation: "auto", class: "ladder"},
-					{ start: "#2", end: "#87", stroke: "red", class: "snake" }
-					]
+					paths: paths
 				});
 				
 				
 				// New game
 				var players = $('#p1,#p2').detach();
 				players.appendTo('#1');
-				$('#player1').addClass('active');
+				$('#player1').addClass('turn');
 				var deg_temp =0;
 				var player_turn = 1;
 				// Dice
@@ -34,7 +41,7 @@
 					$(this).css({'transform': 'rotate('+deg_temp+'deg)'});
 					
 					$('#pmv'+player_turn).html(Math.floor((Math.random() * 6) + 1));
-					$('#player'+player_turn).removeClass('active');
+					$('#player'+player_turn).removeClass('turn');
 					move_it(player_turn);
 					if(player_turn == 1){
 						player_turn = 2;
@@ -42,7 +49,7 @@
 						player_turn = 1;
 					}
 					$('#pmv'+player_turn).html('');
-					$('#player'+player_turn).addClass('active');
+					$('#player'+player_turn).addClass('turn');
 				});				
 			});
 			 
@@ -61,7 +68,10 @@
 						newPos = snakes[newPos];
 					}
 					var palyer = $('#p'+player_turn).detach();				
-					palyer.appendTo('#'+newPos);					
+					palyer.appendTo('#'+newPos);
+					$('#'+currentPos).removeClass('active');
+					$('#'+newPos).addClass('active');
+					
 					check_position(newPos,player_turn);
 				}
 			}
@@ -87,16 +97,21 @@
 			}
 			#svgContainer {		 
 				position: absolute;
-				opacity: 0.7;
+				opacity: 0.8;
 				z-index: -1;
 			}
 			.ladder{
 				stroke-dasharray:2,5;
 			}
-			.snake{}
-			.active{
+			.snake{
+				/* stroke-dasharray:1,3; */
+			}
+			.turn{
 				font-weight:bold;
 				color: green;
+			}
+			.active{
+				border-color: cyan !important;				
 			}
 			#msg{
 				font-weight:bold;
@@ -119,7 +134,6 @@
 		</style>
 	</head>
 	<body>
-		<?php //require_once('Game.php'); ?>
 		<header>
 			<div>
 				<h3>Snakes & Ladder</h3>
@@ -153,7 +167,13 @@
 				<tr>
 					<td colspan="2"><input type="button" value="New Game" onclick="javascript:window.location.reload();" /></td>
 				</tr>
-			</table>	
+			</table>
+			<?php foreach($snakes as $key => $val){
+				echo "<p style='color:red'>snake start:- $val end:- $key</p>";
+			}
+			foreach($ladders as $key => $val){ 
+				echo "<p style='color:green'>ladder start:- $key end:- $val</p>";
+			} ?>
 			</div>
 		</div>
 	</body>
