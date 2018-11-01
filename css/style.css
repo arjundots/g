@@ -1,0 +1,46 @@
+.row{width:80%;float:left;}
+.row > div {
+	background: transparent;
+	border: 1px solid grey;
+	width:10%;
+	height:70px;
+	text-align:center;
+	padding: 2px;
+	float:left;
+}
+#svgContainer {		 
+	position: absolute;
+	opacity: 0.8;
+	z-index: -1;
+}
+.ladder{
+	stroke-dasharray:2,5;
+}
+.snake{
+	/* stroke-dasharray:1,3; */
+}
+.turn{
+	font-weight:bold;
+	color: green;
+}
+.active{
+	border:2px solid blue !important;				
+}
+#msg{
+	font-weight:bold;
+	color: green;
+}
+.panel{
+	width:20%;
+	float:right;
+	text-align:center;
+}
+.panel > table{
+	margin:10px;					
+}
+.panel > table td,th {
+	height: 50px;
+	width: 50%;
+	padding: 5px;
+	text-align: center;
+}

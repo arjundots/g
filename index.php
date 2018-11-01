@@ -2,10 +2,10 @@
 <html lang="en">
 	<head>
 		<title>Game</title>
-		<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-		<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"/>
+		<script src="js/jquery-3.3.1.min.js"></script>
 		<script src="js/jquery.html-svg-connect.js"></script>
+		<link href="css/bootstrap.min.css" rel="stylesheet"/>
+		<link href="css/style.css" rel="stylesheet"/>
 		<?php require_once('Game.php'); ?>
 		<?php list($snakes,$ladders) = new_game(); ?>
 		<script type="text/javascript">
@@ -26,8 +26,7 @@
 				$("#svgContainer").HTMLSVGconnect({
 					orientation: "auto",
 					paths: paths
-				});
-				
+				});				
 				
 				// New game
 				var players = $('#p1,#p2').detach();
@@ -60,23 +59,21 @@
 				var newPos = Number(currentPos)+Number(move_no);
 				if(newPos<=100){
 					if(ladders.hasOwnProperty(newPos)){
-						alert('You are on ladder.');
+						alert('Your next move will be on ladder.');
 						newPos = ladders[newPos];
 					}
 					if(snakes.hasOwnProperty(newPos)){
-						alert('You are on snake.');
+						alert('Your next move will be on snake.');
 						newPos = snakes[newPos];
 					}
 					var palyer = $('#p'+player_turn).detach();				
 					palyer.appendTo('#'+newPos);
 					$('#'+currentPos).removeClass('active');
-					$('#'+newPos).addClass('active');
-					
+					$('#'+newPos).addClass('active');					
 					check_position(newPos,player_turn);
 				}
 			}
-			function check_position(newPos,player_turn){
-				
+			function check_position(newPos,player_turn){				
 				if(newPos==100){
 					$('#'+newPos).css({'background':'lightgreen'});
 					$("#dice").remove();
@@ -84,54 +81,6 @@
 				}
 			}
 		</script>
-		<style>		
-			.row{width:80%;float:left;}
-			.row > div {
-				background: transparent;
-				border: 1px solid grey;
-				width:10%;
-				height:70px;
-				text-align:center;
-				padding: 2px;
-				float:left;
-			}
-			#svgContainer {		 
-				position: absolute;
-				opacity: 0.8;
-				z-index: -1;
-			}
-			.ladder{
-				stroke-dasharray:2,5;
-			}
-			.snake{
-				/* stroke-dasharray:1,3; */
-			}
-			.turn{
-				font-weight:bold;
-				color: green;
-			}
-			.active{
-				border-color: cyan !important;				
-			}
-			#msg{
-				font-weight:bold;
-				color: green;
-			}
-			.panel{
-				width:20%;
-				float:right;
-				text-align:center;
-			}
-			.panel > table{
-				margin:10px;					
-			}
-			.panel > table td,th {
-				height: 50px;
-				width: 50%;
-				padding: 5px;
-				text-align: center;
-			}
-		</style>
 	</head>
 	<body>
 		<header>
